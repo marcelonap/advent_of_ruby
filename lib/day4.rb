@@ -15,11 +15,15 @@ module AdventOfCode
     def initialize(input)
       Util.validate_input(input)
       @input = File.readlines(input).map { |line| line.chars}
-    end
-
-    def solve_part_one()
       @y_limit = @input.length 
       @x_limit = @input[0].length  
+    end
+
+    def input
+      @input
+    end
+
+    def solve_part_one
       num_words = 0
       @letter_factor = 1
       @input.each.with_index do |line, i|
@@ -34,10 +38,39 @@ module AdventOfCode
             num_words += 1 if find_word(j,i,-1,1)
             num_words += 1 if find_word(j,i,1,-1)
           end
+        end
       end
+      num_words 
     end
 
-      puts "words found: #{ num_words }"
+    def solve_part_two
+      num_words = 0
+      @input.each.with_index do |line, i|
+        line.each.with_index do |letter,j|
+          if letter == 'A'
+            unless i - 1 < 0 || i + 1 >= @y_limit || j - 1 < 0 || j + 1 >= @x_limit then
+              lr_check = false
+              rl_check = false 
+              value_one =  @input[i - 1][j - 1] 
+              case value_one
+              when "M"
+                lr_check =  @input[i + 1][j + 1] == "S"
+              when "S"
+                lr_check = @input[i + 1][j + 1] == "M"
+              end
+              value_two = @input[i + 1][j - 1]
+              case value_two
+              when "M"
+                rl_check =  @input[i - 1][j + 1] == "S"
+              when "S"
+                rl_check = @input[i - 1][j + 1] == "M"
+              end
+              num_words += 1 if lr_check && rl_check
+            end
+          end
+        end 
+      end
+      num_words
     end
 
     def find_word(x_pos, y_pos, x_offset, y_offset)

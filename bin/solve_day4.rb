@@ -6,4 +6,5 @@ input = File.open(input_path)
 
 solver = AdventOfCode::Day4.new(input)
 
-solver.solve_part_one
+puts "part one: #{ solver.solve_part_one} "
+puts "part two: #{solver.solve_part_two} " 
