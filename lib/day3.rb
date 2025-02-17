@@ -1,9 +1,11 @@
+# frozen_string_literal: true
 require 'strscan'
+require_relative '../util'
+
 module AdventOfCode
     class Day3
         def initialize(input)
-            raise ArgumentError, "Input must be a File object" unless input.is_a?(File)
-            raise ArgumentError, "Input file must be a .txt file" unless input.path.end_with?('.txt')
+            Util.validate_input(input)
             @input = File.read(input)
             @part_one_sum = 0
             @part_two_sum = 0
