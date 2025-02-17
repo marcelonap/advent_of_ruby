@@ -13,7 +13,6 @@ module AdventOfCode
             regex = /mul\((\d{1,3})\,(\d{1,3})\)/
             matches = @input.scan regex
             matches.each do |match|
-                raise ArgumentError, "Caught invalid match" if match.count < 2 
                 num1 = match[0].to_i
                 num2 = match[1].to_i
                 @part_one_sum += (num1 * num2)
